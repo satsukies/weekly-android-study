@@ -1,0 +1,22 @@
+name: Deploy to DeployGate Example
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Upload to DeployGate
+        uses: DeployGate/deploygate-upload-github-action@v1.0.0
+        with:
+          api_token: ${{ secrets.DEPLOYGATE_API_TOKEN }}
+          owner_name:  ${{ secrets.DEPLOYGATE_OWNER_NAME }}
+          file_path: test.apk
+          message: "message example"
